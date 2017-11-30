@@ -21,7 +21,7 @@
     "stmt" : "UPDATE usac_users SET password_hash = :password_hash WHERE id_user = :id_user"
   },
   { "id" : "change_mail_by_id_user",
-    "stmt" : "UPDATE usac_users SET mail = :mail WERE id_user = :id_user"
+    "stmt" : "UPDATE usac_users SET mail = :mail WHERE id_user = :id_user"
   },
   { "id" : "create_session",
     "stmt" : "INSERT INTO usac_sessions (id_session, id_user, expiration, origin) VALUES (:id_session, :id_user, :expiration, :origin)"
@@ -36,7 +36,7 @@
     "stmt" : "INSERT INTO usac_user_registration_requests (id_request, mail, origin) VALUES (:id_request, :mail, :origin)"
   },
   { "id" : "get_user_registration_request_by_id_request",
-    "stmt" : "SELECT id_request, mail, origin, request_date FROM usac_user_registration_requests WHERE id_request = :id_request"
+    "stmt" : "SELECT id_request, mail, origin, request_date, origin FROM usac_user_registration_requests WHERE id_request = :id_request"
   },
   { "id" : "clear_user_registration_request_by_id_request",
     "stmt" : "DELETE FROM usac_user_registration_requests WHERE id_request = :id_request"
@@ -44,10 +44,10 @@
   { "id" : "request_change_user_mail",
     "stmt" : "INSERT INTO usac_change_user_mail_requests (id_request, mail, id_user, origin) VALUES ( :id_request, :mail, :id_user, :origin)"
   },
-  { "id" : "get_user_change_user_mail_request_by_id_request",
-    "stmt" : "SELECT id_request, mail, id_user, request_date FROM usac_user_change_user_mail_request FROM usac_change_user_mail_request WHERE id_request = :id_request"
+  { "id" : "get_change_user_mail_request_by_id_request",
+    "stmt" : "SELECT id_request, mail, id_user, request_date, origin FROM usac_change_user_mail_requests WHERE id_request = :id_request"
   },
   { "id" : "clear_change_user_mail_request_by_id_request",
-    "stmt" : "DELETE FROM user_change_user_mail_requests WHERE id_request = :id_request"
+    "stmt" : "DELETE FROM usac_change_user_mail_requests WHERE id_request = :id_request"
   }
 ]

@@ -6,6 +6,7 @@ class Users {
 
 use UsersRegistration;
 use UsersSession;
+use UsersChangeMailProcess;
 
 public $dao;
 

@@ -13,7 +13,7 @@ function login($name, $password, $expiration, $origin) {
     $id_session = $this->create_session($user['id_user'], $expiration, $origin);
     return [
       'id_user' => $user['id_user'],
-      'username' => $name,
+      'name' => $name,
       'expiration' => $expiration,
       'id_session' => $id_session
     ];
@@ -36,6 +36,15 @@ function check_session($id_session, $origin) {
     return $user;
   } else
     throw new \Exception('INVALID_SESSION');
+}
+
+function check_session_and_password($id_session, $password, $origin) {
+  $user = $this->check_session($id_session, $origin);
+
+  if ( !password_verify($password, $user['password_hash']) ) {
+    throw new \Exception('WRONG_PASSWORD');
+  }
+  return $user;
 }
 
 function create_session($id_user, $expiration, $origin) {

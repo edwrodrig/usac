@@ -137,7 +137,7 @@ SQL_STMT;
 
 function change_mail_by_id_user($mail, $id_user) {
   $query = <<<'SQL_STMT'
-UPDATE usac_users SET mail = :mail WERE id_user = :id_user
+UPDATE usac_users SET mail = :mail WHERE id_user = :id_user
 SQL_STMT;
 
   $s = $this->pdo->prepare($query);
@@ -230,7 +230,7 @@ SQL_STMT;
 
 function get_user_registration_request_by_id_request($id_request) {
   $query = <<<'SQL_STMT'
-SELECT id_request, mail, origin, request_date FROM usac_user_registration_requests WHERE id_request = :id_request
+SELECT id_request, mail, origin, request_date, origin FROM usac_user_registration_requests WHERE id_request = :id_request
 SQL_STMT;
 
   $s = $this->pdo->prepare($query);
@@ -282,9 +282,9 @@ SQL_STMT;
   return $this->pdo->lastInsertId();
 }
 
-function get_user_change_user_mail_request_by_id_request($id_request) {
+function get_change_user_mail_request_by_id_request($id_request) {
   $query = <<<'SQL_STMT'
-SELECT id_request, mail, id_user, request_date FROM usac_user_change_user_mail_request FROM usac_change_user_mail_request WHERE id_request = :id_request
+SELECT id_request, mail, id_user, request_date, origin FROM usac_change_user_mail_requests WHERE id_request = :id_request
 SQL_STMT;
 
   $s = $this->pdo->prepare($query);
@@ -301,7 +301,7 @@ SQL_STMT;
 
 function clear_change_user_mail_request_by_id_request($id_request) {
   $query = <<<'SQL_STMT'
-DELETE FROM user_change_user_mail_requests WHERE id_request = :id_request
+DELETE FROM usac_change_user_mail_requests WHERE id_request = :id_request
 SQL_STMT;
 
   $s = $this->pdo->prepare($query);

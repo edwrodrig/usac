@@ -7,6 +7,5 @@ function init() {
   \edwrodrig\usac\Config::$engine = 'sqlite3';
   \edwrodrig\usac\Config::create_database();
 
-  \edwrodrig\usac\Config::$registration_adapter = new \test\view\RegistrationAdapter;
-
+  \edwrodrig\usac\Config::$notification_adapter = new \test\view\NotificationAdapter;
 }

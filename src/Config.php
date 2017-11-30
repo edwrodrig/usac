@@ -5,7 +5,7 @@ namespace edwrodrig\usac;
 class Config {
 
 public static $pdo;
-public static $registration_adapter;
+public static $notification_adapter;
 public static $engine = 'sqlite3';
 
 //session duration in seconds
@@ -28,8 +28,8 @@ public static function test_database() {
   self::create_database();
 }
 
-public static function get_registration_adapter() {
-  return self::$registration_adapter;  
+public static function get_notification_adapter() {
+  return self::$notification_adapter;  
 }
 
 }

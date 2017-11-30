@@ -22,7 +22,7 @@ function request_user_registration(string $mail, $origin) {
   $id_request = uniqid();
   $this->dao->request_user_registration($id_request, $mail, $origin);
 
-  $adapter = \edwrodrig\usac\Config::get_registration_adapter();
+  $adapter = \edwrodrig\usac\Config::get_notification_adapter();
   $adapter->registration_requested($id_request, $mail);
 
   $data = [
@@ -39,7 +39,7 @@ function confirm_registration($id_request, $name, $password, $origin) {
     $this->dao->clear_user_registration_request_by_id_request($id_request);
     return $user;
   } else {
-    throw new \Exception('USER_REGISTRATION_REQUEST_DOES_NOT_EXISTS');
+    throw new \Exception('USER_REGISTRATION_REQUEST_DOES_NOT_EXIST');
   }
 
 }
