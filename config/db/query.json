@@ -15,7 +15,7 @@
     "stmt" : "SELECT id_user, name, password_hash, mail FROM usac_users WHERE name = :name OR mail = :mail"
   },
   { "id" : "get_user_by_id_session",
-    "stmt" : "SELECT usac_users.id_user, name, password_hash, id_session, date_login, expiration, mail, origin FROM usac_users, usac_sessions WHERE usac_users.id_user = usac_sessions.id_user AND id_session = :id_session"
+    "stmt" : "SELECT usac_users.id_user, name, password_hash, id_session, login_date, expiration, mail, origin FROM usac_users, usac_sessions WHERE usac_users.id_user = usac_sessions.id_user AND id_session = :id_session"
   },
   { "id" : "change_password_hash_by_id_user",
     "stmt" : "UPDATE usac_users SET password_hash = :password_hash WHERE id_user = :id_user"
@@ -31,5 +31,23 @@
   },
   { "id" : "log_session_access",
     "stmt" : "INSERT INTO usac_sessions_access (id_session, id_user, origin) VALUES (:id_session, :id_user, :origin)"
+  },
+  { "id" : "request_user_registration",
+    "stmt" : "INSERT INTO usac_user_registration_requests (id_request, mail, origin) VALUES (:id_request, :mail, :origin)"
+  },
+  { "id" : "get_user_registration_request_by_id_request",
+    "stmt" : "SELECT id_request, mail, origin, request_date FROM usac_user_registration_requests WHERE id_request = :id_request"
+  },
+  { "id" : "clear_user_registration_request_by_id_request",
+    "stmt" : "DELETE FROM usac_user_registration_requests WHERE id_request = :id_request"
+  },
+  { "id" : "request_change_user_mail",
+    "stmt" : "INSERT INTO usac_change_user_mail_requests (id_request, mail, id_user, origin) VALUES ( :id_request, :mail, :id_user, :origin)"
+  },
+  { "id" : "get_user_change_user_mail_request_by_id_request",
+    "stmt" : "SELECT id_request, mail, id_user, request_date FROM usac_user_change_user_mail_request FROM usac_change_user_mail_request WHERE id_request = :id_request"
+  },
+  { "id" : "clear_change_user_mail_request_by_id_request",
+    "stmt" : "DELETE FROM user_change_user_mail_requests WHERE id_request = :id_request"
   }
 ]

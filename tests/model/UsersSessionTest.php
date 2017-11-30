@@ -3,12 +3,13 @@
 namespace edwrodrig\usac\model;
 
 use PHPUnit\Framework\TestCase;
+use edwrodrig\usac\model\Users;
 
-class UsersTest extends TestCase {
+class UsersSessionTest extends TestCase {
 
 public function setUp() {
-  \edwrodrig\usac\Config::test_database();
-  $this->model = new \usac\model\Users;
+  \test\init();
+  $this->model = new Users;
 }
 
 public function testRegisterUser() {

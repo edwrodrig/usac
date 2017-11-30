@@ -12,7 +12,8 @@
     },
     "require-dev" : {
         "phpunit/phpunit" : "^6.4",
-        "edwrodrig/f2s": "dev-master"
+        "edwrodrig/f2s": "dev-master",
+        "edwrodrig/generator_dao" : "dev-master"
     },
     "autoload" : {
         "psr-4" : {
@@ -21,7 +22,8 @@
     },
     "autoload-dev" : {
         "psr-4" : {
-            "edwrodrig\\usac\\db\\" : "src/db/sqlite3/"
-        }
+            "test\\" : "tests/src/"
+        },
+        "files" : [ "tests/src/init.php" ]
     }
 }
