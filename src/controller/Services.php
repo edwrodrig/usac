@@ -30,32 +30,6 @@ public function check_session(string $id_session) {
   return $session_info;
 }
 
-public function request_user_registration(string $mail) {
-
-}
-
-public function request_change_user_name(string $id_session, string $password) {
-  $this->check_session($id_session);
-}
-
-public function request_change_user_mail(string $id_session, string $password) {
-
-}
-
-public function request_change_user_password(string $name = '', string $mail = '') {
-
-}
-
-public function change_user_mail(string $id_request) {
-
-}
-
-public function change_user_password(string $id_session, string $password, string $new_password) {
-
-}
-
-public function confirm_registration(
-
 private function get_origin() {
   return $_SERVER['REMOVE_HOST'] ?? 'local';
 }
