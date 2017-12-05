@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . DIRECTORY_SEPARATOR . '../src/usac/controller' . DIRECTORY_SEPARATOR . 'Service.php');
+require_once(__DIR__ . '/../src/controller/Services.php');
 
 try {
 
@@ -8,10 +8,10 @@ try {
 
   $args = [];
 
-  if ( !isset($params["name"]) ) {
+  if ( !isset($params["id_session"]) ) {
     throw new \Exception('UNDEFINED_ARGUMENT');
   } else {
-    $param = $params['name'];
+    $param = $params['id_session'];
   }
 
   $type = gettype($param);
@@ -21,22 +21,7 @@ try {
   $args[] = $param;
 
 
-  if ( !isset($params["password"]) ) {
-    throw new \Exception('UNDEFINED_ARGUMENT');
-  } else {
-    $param = $params['password'];
-  }
-
-  $type = gettype($param);
-  if ( $type != "string" )
-    throw new \Exception('WRONG_ARGUMENT_TYPE');
-
-  $args[] = $param;
-
-
-  $service = new \usac\controller\Service();
-  $return = $service->login(...$args);
-
+  $return = (new \edwrodrig\usac\controller\Services)->close_session(...$args);
   $return = [
     'status' => 0,
     'data' => $return

@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . DIRECTORY_SEPARATOR . '../src/usac/controller' . DIRECTORY_SEPARATOR . 'Service.php');
+require_once(__DIR__ . '/../src/controller/Services.php');
 
 try {
 
@@ -21,9 +21,7 @@ try {
   $args[] = $param;
 
 
-  $service = new \usac\controller\Service();
-  $return = $service->check_session(...$args);
-
+  $return = (new \edwrodrig\usac\controller\Services)->check_session(...$args);
   $return = [
     'status' => 0,
     'data' => $return
