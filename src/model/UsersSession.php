@@ -4,7 +4,9 @@ namespace edwrodrig\usac\model;
 
 trait UsersSession {
 
-function login($name, $password, $expiration, $origin) {
+function login($name, $password, $expiration, $origin = null) {
+  $origin = empty($origin) ? \edwrodrig\usac\Utils::get_origin() : $origin;
+
   if ( $user = $this->dao->get_user_by_name($name)->fetch() ) {
 
     if ( !password_verify($password, $user['password_hash']) )
@@ -25,7 +27,9 @@ function close_session($id_session) {
   $this->dao->close_session_by_id_session($id_session); 
 }
 
-function check_session($id_session, $origin) {
+function check_session($id_session, $origin = null) {
+  $origin = empty($origin) ? \edwrodrig\usac\Utils::get_origin() : $origin;
+
   if ( $user = $this->dao->get_user_by_id_session($id_session)->fetch() ) {
     if ( $user['origin'] != $origin )
       throw new \Exception('DIFFERENT_ORIGIN');
@@ -38,7 +42,7 @@ function check_session($id_session, $origin) {
     throw new \Exception('INVALID_SESSION');
 }
 
-function check_session_and_password($id_session, $password, $origin) {
+function check_session_and_password($id_session, $password, $origin = null) {
   $user = $this->check_session($id_session, $origin);
 
   if ( !password_verify($password, $user['password_hash']) ) {
@@ -47,7 +51,9 @@ function check_session_and_password($id_session, $password, $origin) {
   return $user;
 }
 
-function create_session($id_user, $expiration, $origin) {
+function create_session($id_user, $expiration, $origin = null) {
+  $origin = empty($origin) ? \edwrodrig\usac\Utils::get_origin() : $origin;
+
   try {
     $this->dao->pdo->beginTransaction();
 

@@ -11,4 +11,8 @@ static function future_date($seconds) {
   return $current_date;
 }
 
+static function get_origin() {
+  return $_SERVER['REMOVE_HOST'] ?? 'local';
+}
+
 }

@@ -22,12 +22,6 @@ public static function get_query_dao() {
   return $dao;
 }
 
-public static function test_database() {
-  self::$pdo = new \PDO('sqlite::memory:');
-  self::$engine = 'sqlite3';
-  self::create_database();
-}
-
 public static function get_notification_adapter() {
   return self::$notification_adapter;  
 }
