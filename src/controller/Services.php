@@ -1,6 +1,7 @@
 <?php
-
 namespace usac\controller;
+
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 class Services {
 
