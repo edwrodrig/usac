@@ -30,7 +30,7 @@ public function remembered_login(string $id_login, string $token) {
 } 
 
 public function close_remembered_login(string $id_login, string $token) {
-
+  return $this->users->close_remembered_login($id_login, $token);
 }
 
 public function check_session(string $id_session) {
