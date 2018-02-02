@@ -19,7 +19,7 @@ function register($name, $password, $mail) {
 
 
 function request_user_registration(string $mail, $origin) {
-  $id_request = uniqid();
+  $id_request = \edwrodrig\usac\Util::uniqid();
   $this->dao->request_user_registration($id_request, $mail, $origin);
 
   $adapter = \edwrodrig\usac\Config::get_notification_adapter();

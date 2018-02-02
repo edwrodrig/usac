@@ -7,6 +7,7 @@ class Users {
 use UsersRegistration;
 use UsersSession;
 use UsersChangeMailProcess;
+use UsersRememberedLogin;
 
 public $dao;
 

@@ -44,6 +44,22 @@ SQL_STMT;
   return $s;
 }
 
+function create_table_usac_remembered_logins() {
+  $query = <<<'SQL_STMT'
+CREATE TABLE usac_remembered_logins (id_login TEXT PRIMARY KEY, token_hash TEXT NOT NULL, id_user INTEGER NOT NULL, id_session TEXT, expiration DATETIME)
+SQL_STMT;
+
+  $s = $this->pdo->prepare($query);
+
+
+  if ( !$s->execute() ) {
+    $e = new \Exception('QUERY_EXECUTION_ERROR');
+    $e->description = $s->errorInfo()[2];
+    throw $e;
+  }
+  return $s;
+}
+
 function create_table_usac_session_access() {
   $query = <<<'SQL_STMT'
 CREATE TABLE usac_sessions_access (id_session TEXT, id_user NOT NULL, origin TEXT NOT NULL, date DATETIME DEFAULT CURRENT_TIMESTAMP)
@@ -98,6 +114,7 @@ static function build_db($pdo) {
 
   $dao->create_table_users();
   $dao->create_table_usac_sessions();
+  $dao->create_table_usac_remembered_logins();
   $dao->create_table_usac_session_access();
   $dao->create_table_usac_user_registration_requests();
   $dao->create_table_usac_change_user_mail_requests();

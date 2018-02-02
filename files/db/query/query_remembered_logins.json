@@ -1,0 +1,15 @@
+[
+  { "id" : "register_remembered_login",
+    "stmt" : "INSERT INTO usac_remembered_logins (id_login, token_hash, id_user, id_session, expiration) VALUES (:id_login, :token_hash, :id_user, :id_session, :expiration)"
+  },
+  { "id" : "close_remembered_login_by_id_login",
+    "stmt" : "DELETE FROM usac_remembered_logins WHERE id_login = :id_login"
+  },
+  { "id" : "update_remembered_login_by_id_login",
+    "stmt" : "UPDATE usac_remembered_logins SET token_hash = :token_hash, id_session = :id_session, expiration = :expiration WHERE id_login = :id_login"
+
+  },
+  { "id" : "get_remembered_login_by_id_login",
+    "stmt" : "SELECT id_login, token_hash, id_user, id_session, expiration FROM usac_remembered_logins WHERE id_login = :id_login"
+  }
+]

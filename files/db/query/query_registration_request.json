@@ -1,0 +1,11 @@
+[
+  { "id" : "request_user_registration",
+    "stmt" : "INSERT INTO usac_user_registration_requests (id_request, mail, origin) VALUES (:id_request, :mail, :origin)"
+  },
+  { "id" : "get_user_registration_request_by_id_request",
+    "stmt" : "SELECT id_request, mail, origin, request_date, origin FROM usac_user_registration_requests WHERE id_request = :id_request"
+  },
+  { "id" : "clear_user_registration_request_by_id_request",
+    "stmt" : "DELETE FROM usac_user_registration_requests WHERE id_request = :id_request"
+  }
+]

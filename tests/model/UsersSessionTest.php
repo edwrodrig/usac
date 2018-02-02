@@ -53,7 +53,7 @@ public function testCreateSession() {
 
 public function testLoginUser() {
   $user_data = $this->testRegisterUser();
-  $session_data = $this->model->login($user_data['name'], self::$default_password, self::$expiration_never, self::$default_origin);
+  $session_data = $this->model->login($user_data['name'], self::$default_password, self::$expiration_never, false, self::$default_origin);
 
   $this->assertArraySubset([
     'id_user' => $user_data['id_user'],

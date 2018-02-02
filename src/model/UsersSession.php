@@ -4,8 +4,8 @@ namespace edwrodrig\usac\model;
 
 trait UsersSession {
 
-function login($name, $password, $expiration, $origin = null) {
-  $origin = empty($origin) ? \edwrodrig\usac\Utils::get_origin() : $origin;
+function login($name, $password, $expiration, $remember, $origin = null) {
+  $origin = \edwrodrig\usac\Util::normalize_origin($origin);
 
   if ( $user = $this->dao->get_user_by_name($name)->fetch() ) {
 
@@ -13,12 +13,19 @@ function login($name, $password, $expiration, $origin = null) {
       throw new \Exception('WRONG_PASSWORD');
 
     $id_session = $this->create_session($user['id_user'], $expiration, $origin);
-    return [
+
+    $session_info = [
       'id_user' => $user['id_user'],
       'name' => $name,
       'expiration' => $expiration,
-      'id_session' => $id_session
+      'id_session' => $id_session,
     ];
+
+    if ( $remember )
+      $session_info['remembered_login'] = $this->remember_login($user['id_user'], $id_session, $expiration);
+
+    return $session_info;
+
   } else
     throw new \Exception('USER_DOES_NOT_EXIST');
 }
@@ -28,7 +35,7 @@ function close_session($id_session) {
 }
 
 function check_session($id_session, $origin = null) {
-  $origin = empty($origin) ? \edwrodrig\usac\Utils::get_origin() : $origin;
+  $origin = \edwrodrig\usac\Util::normalize_origin($origin);
 
   if ( $user = $this->dao->get_user_by_id_session($id_session)->fetch() ) {
     if ( $user['origin'] != $origin )
@@ -52,12 +59,12 @@ function check_session_and_password($id_session, $password, $origin = null) {
 }
 
 function create_session($id_user, $expiration, $origin = null) {
-  $origin = empty($origin) ? \edwrodrig\usac\Utils::get_origin() : $origin;
+  $origin = \edwrodrig\usac\Util::normalize_origin($origin);
 
   try {
     $this->dao->pdo->beginTransaction();
 
-    $id_session = uniqid("se", true);
+    $id_session = \edwrodrig\usac\Util::uniqid();
     $this->dao->create_session($id_session, $id_user, $expiration, $origin);
     
     $this->dao->log_session_access($id_session, $id_user, $origin);
@@ -71,7 +78,7 @@ function create_session($id_user, $expiration, $origin = null) {
 }
 
 static function current_session_expiration_date() {
-  $expiration = \edwrodrig\usac\Utils::future_date(\edwrodrig\usac\Config::$default_session_duration);
+  $expiration = \edwrodrig\usac\Util::future_date(\edwrodrig\usac\Config::$default_session_duration);
   return $expiration->format('Y-m-d H:i:s');
 }
 

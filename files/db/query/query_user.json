@@ -1,0 +1,29 @@
+[
+  { "id" : "register_user",
+    "stmt" : "INSERT INTO usac_users (name, password_hash, mail) VALUES (:name, :password_hash, :mail)"
+  },
+  { "id" : "get_user_password_by_name",
+    "stmt" : "SELECT password_hash FROM usac_users WHERE name = :name"
+  },
+  { "id" : "get_user_by_id_user",
+    "stmt" : "SELECT id_user, name, password_hash, mail FROM usac_users WHERE id_user = :id_user"
+  },
+  { "id" : "get_user_by_name",
+    "stmt" : "SELECT id_user, name, password_hash, mail FROM usac_users WHERE name = :name"
+  }, 
+  { "id" : "get_user_by_mail",
+    "stmt" : "SELECT id_user, name, password_hash, mail FROM usac_users WHERE mail = :mail"
+  },
+  { "id" : "get_user_by_name_or_mail",
+    "stmt" : "SELECT id_user, name, password_hash, mail FROM usac_users WHERE name = :name OR mail = :mail"
+  },
+  { "id" : "get_user_by_id_session",
+    "stmt" : "SELECT usac_users.id_user, name, password_hash, id_session, login_date, expiration, mail, origin FROM usac_users, usac_sessions WHERE usac_users.id_user = usac_sessions.id_user AND id_session = :id_session"
+  },
+  { "id" : "change_password_hash_by_id_user",
+    "stmt" : "UPDATE usac_users SET password_hash = :password_hash WHERE id_user = :id_user"
+  },
+  { "id" : "change_mail_by_id_user",
+    "stmt" : "UPDATE usac_users SET mail = :mail WHERE id_user = :id_user"
+  }
+]

@@ -12,8 +12,8 @@
     },
     "require-dev" : {
         "phpunit/phpunit" : "^6.4",
-        "edwrodrig/generator_service": "dev-master",
-        "edwrodrig/generator_dao" : "dev-master"
+        "edwrodrig/generator_service": "1.0.0",
+        "edwrodrig/generator_dao" : "2.0.0"
     },
     "autoload" : {
         "psr-4" : {
@@ -25,5 +25,10 @@
             "test\\" : "tests/src/"
         },
         "files" : [ "tests/src/init.php" ]
+    },
+    "scripts" : {
+      "test" : "phpunit",
+      "update_dao" : "php scripts/update_dao.php",
+      "update_services" : "php scripts/update_services.php"
     }
 }

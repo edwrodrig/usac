@@ -2,7 +2,7 @@
 
 namespace edwrodrig\usac;
 
-class Utils {
+class Util {
 
 static function future_date($seconds) {
   $current_date = new \DateTime("now", new \DateTimeZone('GMT'));
@@ -13,6 +13,14 @@ static function future_date($seconds) {
 
 static function get_origin() {
   return $_SERVER['REMOVE_HOST'] ?? 'local';
+}
+
+static function normalize_origin($origin = null) {
+  return empty($origin) ? \edwrodrig\usac\Util::get_origin() : $origin;
+}
+
+static function uniqid($length = 32) {
+  return bin2hex(random_bytes($length));
 }
 
 }
