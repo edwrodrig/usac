@@ -26,7 +26,7 @@ public function close_session(string $id_session) {
 public function remembered_login(string $id_login, string $token) {
   $expiration_date = \edwrodrig\usac\model\Users::current_session_expiration_date();
  
-  return $this->users->remembered_login_by_id_login($id_login, $token, $expiration_date);
+  return $this->users->remembered_login($id_login, $token, $expiration_date);
 } 
 
 public function close_remembered_login(string $id_login, string $token) {
