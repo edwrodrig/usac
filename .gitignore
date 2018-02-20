@@ -1,4 +1,4 @@
 *.swp
 composer.lock
 /vendor/
-/ws/
+/examples/ws

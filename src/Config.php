@@ -8,6 +8,8 @@ public static $pdo;
 public static $notification_adapter;
 public static $engine = 'sqlite3';
 
+const SERVICE_DIR = __DIR__ . '/controller';
+
 //session duration in seconds
 public static $default_session_duration = 3600; 
 
