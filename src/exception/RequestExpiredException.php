@@ -18,6 +18,6 @@ class RequestExpiredException extends \Exception
      */
     public function __construct(string $id_request)
     {
-        parent::__construct("[$id_request]");
+        parent::__construct($id_request);
     }
 }

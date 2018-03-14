@@ -16,7 +16,7 @@ use edwrodrig\usac\query\user\SelectUserById;
 use edwrodrig\usac\Session;
 use edwrodrig\usac\User;
 
-abstract class SelectSession extends Select
+class SelectSession extends Select
 {
 
     private $id_session;
@@ -66,7 +66,6 @@ SQL;
      * @throws \edwrodrig\usac\exception\InvalidMailException
      */
     public function create_from_row(array $row) : Session {
-        $row['mail'] = new Email($row['mail']);
         $row['creation_date'] = $this->create_datetime($row['creation_date']);
         $row['expiration_date'] = $this->create_datetime($row['expiration_date']);
 

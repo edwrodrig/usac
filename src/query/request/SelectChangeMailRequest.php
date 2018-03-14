@@ -10,7 +10,7 @@ namespace edwrodrig\usac\query\request;
 
 use edwrodrig\query\Select;
 use edwrodrig\usac\Email;
-use edwrodrig\usac\query\user\exception\ChangeMailRequestDoesNotExistException;
+use edwrodrig\usac\query\request\exception\ChangeMailRequestDoesNotExistException;
 use edwrodrig\usac\query\user\SelectUserById;
 use edwrodrig\usac\request\ChangeMailRequest;
 use edwrodrig\usac\request\RegistrationRequest;
@@ -37,7 +37,7 @@ SQL;
         parent::__construct($pdo, $stmt);
     }
 
-    public function where(int $id_request) {
+    public function where(string $id_request) {
         $this->id_request = $id_request;
         $this
             ->b('id_request', $id_request);

@@ -21,7 +21,6 @@ CREATE TABLE usac_users (
 )
 SQL;
 
-
     private $id_user = null;
 
     private $name;
@@ -82,9 +81,13 @@ SQL;
         return $this->mail;
     }
 
+    public function get_default_lang() : string {
+        return $this->default_lang;
+    }
+
     public function set_mail(Email $mail)
     {
-        $this->mail = mail;
+        $this->mail = $mail;
     }
 
 }

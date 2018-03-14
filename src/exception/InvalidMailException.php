@@ -16,8 +16,8 @@ class InvalidMailException extends \Exception
      * InvalidMailException constructor.
      * @param string $mail
      */
-    public function __construct($mail)
+    public function __construct(string $mail)
     {
-        parent::__construct("[$mail]");
+        parent::__construct("$mail");
     }
 }

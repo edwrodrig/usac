@@ -6,7 +6,7 @@
  * Time: 22:23
  */
 
-namespace edwrodrig\usac\query\user\exception;
+namespace edwrodrig\usac\query\request\exception;
 
 
 class ChangeMailRequestDoesNotExistException extends RequestDoesNotExistException

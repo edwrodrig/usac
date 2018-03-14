@@ -10,7 +10,7 @@ namespace edwrodrig\usac\query\request;
 
 use edwrodrig\query\Select;
 use edwrodrig\usac\Email;
-use edwrodrig\usac\query\user\exception\RegistrationRequestDoesNotExistException;
+use edwrodrig\usac\query\request\exception\RegistrationRequestDoesNotExistException;
 use edwrodrig\usac\request\RegistrationRequest;
 
 class SelectRegistrationRequest extends Select
@@ -34,7 +34,7 @@ SQL;
         parent::__construct($pdo, $stmt);
     }
 
-    public function where(int $id_request) {
+    public function where(string $id_request) {
         $this->id_request = $id_request;
         $this
             ->b('id_request', $id_request);

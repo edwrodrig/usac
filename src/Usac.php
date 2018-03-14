@@ -9,8 +9,11 @@
 namespace edwrodrig\usac;
 
 
+use DateInterval;
 use edwrodrig\usac\exception\EmailAlreadyRegisteredException;
 use edwrodrig\usac\exception\RequestExpiredException;
+use edwrodrig\usac\query\request\DeleteChangeMailRequest;
+use edwrodrig\usac\query\request\DeleteRegistrationRequest;
 use edwrodrig\usac\query\request\InsertChangeMailRequest;
 use edwrodrig\usac\query\request\InsertRegistrationRequest;
 use edwrodrig\usac\query\request\SelectChangeMailRequest;
@@ -38,10 +41,38 @@ class Usac
     private $session_duration;
 
 
+    /**
+     * Usac constructor.
+     * @param \PDO $pdo
+     * @throws \Exception
+     */
     public function __construct(\PDO $pdo) {
         $this->pdo = $pdo;
-        $this->registration_request_duration = new \DateInterval('PT24H');
+        $this->registration_request_duration = new DateInterval('PT24H');
+        $this->change_mail_request_duration = new DateInterval('PT24H');
+        $this->session_duration = new DateInterval('PT24H');
     }
+
+    public function set_registration_request_duration(DateInterval $duration) {
+        $this->registration_request_duration = $duration;
+    }
+
+    /**
+     * @param DateInterval $change_mail_request_duration
+     */
+    public function set_change_mail_request_duration(DateInterval $change_mail_request_duration)
+    {
+        $this->change_mail_request_duration = $change_mail_request_duration;
+    }
+
+    /**
+     * @param DateInterval $session_duration
+     */
+    public function set_session_duration(DateInterval $session_duration)
+    {
+        $this->session_duration = $session_duration;
+    }
+
 
     /**
      * @param Email $mail
@@ -98,6 +129,16 @@ class Usac
     }
 
     /**
+     * @param User $user
+     * @throws \edwrodrig\query\exception\UpdateException
+     */
+    public function user_create(User $user) {
+        InsertUser::init($this->pdo)
+            ->set($user)
+            ->insert();
+    }
+
+    /**
      * @param string $id_request
      * @param string $name
      * @param string $password
@@ -112,11 +153,12 @@ class Usac
 
         $user = User::create_new_user($name, $password, $request->get_mail());
 
-        InsertUser::init($this->pdo)
-            ->set($user)
-            ->insert();
-    }
+        $this->user_create($user);
 
+        DeleteRegistrationRequest::init($this->pdo)
+            ->where($request)
+            ->delete();
+    }
 
     /**
      * @param User $user
@@ -148,7 +190,7 @@ class Usac
      * @throws \edwrodrig\query\exception\SelectException
      * @throws \edwrodrig\query\exception\UpdateException
      * @throws exception\InvalidMailException
-     * @throws query\user\exception\ChangeMailRequestDoesNotExistException
+     * @throws query\request\exception\ChangeMailRequestDoesNotExistException
      */
     public function get_change_mail_request(string $id_request) {
         $request = SelectChangeMailRequest::init($this->pdo)
@@ -162,9 +204,13 @@ class Usac
         $user = $request->get_user();
         $user->set_mail($request->get_mail());
 
-        UpdateUserMail::init($this->dao)
+        UpdateUserMail::init($this->pdo)
             ->set($user)
             ->update();
+
+        DeleteChangeMailRequest::init($this->pdo)
+            ->where($request)
+            ->delete();
 
         return $request;
     }
@@ -208,9 +254,5 @@ class Usac
 
         return $session;
     }
-
-
-
-
 
 }

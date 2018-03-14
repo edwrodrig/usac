@@ -6,12 +6,12 @@
  * Time: 22:22
  */
 
-namespace edwrodrig\usac\query\user\exception;
+namespace edwrodrig\usac\query\request\exception;
 
 
 class RequestDoesNotExistException extends \Exception
 {
     public function __construct(string $id_request) {
-        parent::__construct("[$id_request]");
+        parent::__construct("$id_request");
     }
 }

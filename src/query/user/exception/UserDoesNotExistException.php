@@ -19,6 +19,6 @@ class UserDoesNotExistException extends \Exception
      */
     public function __construct(string $type, string $value)
     {
-        parent::__construct("$type\[$value]");
+        parent::__construct(sprintf("%s[%s]", $type, $value));
     }
 }
