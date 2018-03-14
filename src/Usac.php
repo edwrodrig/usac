@@ -26,11 +26,12 @@ use edwrodrig\usac\query\user\SelectUserByMail;
 use edwrodrig\usac\query\user\UpdateUserMail;
 use edwrodrig\usac\request\ChangeMailRequest;
 use edwrodrig\usac\request\RegistrationRequest;
+use PDO;
 
 class Usac
 {
     /**
-     * @var \PDO
+     * @var PDO
      */
     protected $pdo;
 
@@ -43,14 +44,18 @@ class Usac
 
     /**
      * Usac constructor.
-     * @param \PDO $pdo
+     * @param PDO $pdo
      * @throws \Exception
      */
-    public function __construct(\PDO $pdo) {
+    public function __construct(PDO $pdo) {
         $this->pdo = $pdo;
         $this->registration_request_duration = new DateInterval('PT24H');
         $this->change_mail_request_duration = new DateInterval('PT24H');
         $this->session_duration = new DateInterval('PT24H');
+    }
+
+    public function get_pdo() : PDO {
+        return $this->pdo;
     }
 
     public function set_registration_request_duration(DateInterval $duration) {
