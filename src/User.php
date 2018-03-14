@@ -64,6 +64,10 @@ SQL;
         return password_verify($password, $this->password_hash);
     }
 
+    public function is_new() : bool {
+        return is_null($this->id_user);
+    }
+
     public function get_id_user() : int {
         return $this->id_user;
     }
