@@ -34,18 +34,26 @@ SQL;
 
     protected function __construct() {}
 
+    public static function create_new_user(string $name, string $password, Email $mail) {
+        $user = new self;
+        $user->name = $name;
+        $user->change_password($password);
+        $user->mail = $mail;
+        return $user;
+    }
+
     /**
-     * @param $row
+     * @param $data
      * @return User
      */
-    public static function create_from_array($row) : self
+    public static function create_from_array(array $data) : self
     {
         $user = new self;
-        $user->id_user = $row['id_user'];
-        $user->name = $row['name'];
-        $user->password_hash = $row['password_hash'];
-        $user->mail = $row['mail'];
-        $user->default_lang = $row['default_lang'];
+        $user->id_user = $data['id_user'];
+        $user->name = $data['name'];
+        $user->password_hash = $data['password_hash'];
+        $user->mail = $data['mail'];
+        $user->default_lang = $data['default_lang'];
         return $user;
     }
 
@@ -72,6 +80,11 @@ SQL;
     public function get_mail() : Email
     {
         return $this->mail;
+    }
+
+    public function set_mail(Email $mail)
+    {
+        $this->mail = mail;
     }
 
 }

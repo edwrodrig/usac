@@ -16,6 +16,11 @@ use edwrodrig\usac\User;
 abstract class SelectUser extends Select
 {
 
+    /**
+     * @return User
+     * @throws \edwrodrig\query\exception\SelectException
+     * @throws \edwrodrig\usac\exception\InvalidMailException
+     */
     public function get() : User {
         if ( $row = $this->select()->fetch() ) {
             return $this->create_from_row($row);
@@ -29,6 +34,7 @@ abstract class SelectUser extends Select
     /**
      * @param array $row
      * @return User
+     * @throws \edwrodrig\usac\exception\InvalidMailException
      */
     public function create_from_row(array $row) : User {
         $row['mail'] = new Email($row['mail']);

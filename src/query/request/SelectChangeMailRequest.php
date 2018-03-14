@@ -3,78 +3,77 @@
  * Created by PhpStorm.
  * User: edwin
  * Date: 13-03-18
- * Time: 16:07
+ * Time: 15:59
  */
 
-namespace edwrodrig\usac\query\session;
-
+namespace edwrodrig\usac\query\request;
 
 use edwrodrig\query\Select;
 use edwrodrig\usac\Email;
-use edwrodrig\usac\query\session\exception\SessionDoesNotExistException;
+use edwrodrig\usac\query\user\exception\ChangeMailRequestDoesNotExistException;
 use edwrodrig\usac\query\user\SelectUserById;
-use edwrodrig\usac\Session;
-use edwrodrig\usac\User;
+use edwrodrig\usac\request\ChangeMailRequest;
+use edwrodrig\usac\request\RegistrationRequest;
 
-abstract class SelectSession extends Select
+class SelectChangeMailRequest extends Select
 {
-
-    private $id_session;
+    private $id_request;
 
     public function __construct(\PDO $pdo) {
         $stmt = <<<SQL
 SELECT
-  id_session,
-  id_user,
-  creation_date,
-  expiration_date
+    id_request,
+    mail,
+    creation_date,
+    expiration_date,
+    id_user
 FROM
-  usac_sessions
+    usac_change_mail_requests
 WHERE
-  id_session = :id_session
+    id_request = :id_request
 SQL;
+
+
         parent::__construct($pdo, $stmt);
     }
 
-    public function where(string $id_session) {
-        $this->id_session = $id_session;
-
+    public function where(int $id_request) {
+        $this->id_request = $id_request;
         $this
-            ->b('id_session', $id_session);
+            ->b('id_request', $id_request);
 
         return $this;
     }
 
     /**
-     * @return Session
-     * @throws SessionDoesNotExistException
+     * @return ChangeMailRequest
+     * @throws ChangeMailRequestDoesNotExistException
      * @throws \edwrodrig\query\exception\SelectException
      * @throws \edwrodrig\usac\exception\InvalidMailException
      */
-    public function get() : Session {
+    public function get() : ChangeMailRequest {
         if ( $row = $this->select()->fetch() ) {
             return $this->create_from_row($row);
         } else {
-            throw new SessionDoesNotExistException($this->id_session);
+            throw new ChangeMailRequestDoesNotExistException($this->id_request);
         }
     }
 
     /**
      * @param array $row
-     * @return Session
+     * @return ChangeMailRequest
      * @throws \edwrodrig\query\exception\SelectException
      * @throws \edwrodrig\usac\exception\InvalidMailException
      */
-    public function create_from_row(array $row) : Session {
+    public function create_from_row(array $row) : ChangeMailRequest {
         $row['mail'] = new Email($row['mail']);
         $row['creation_date'] = $this->create_datetime($row['creation_date']);
         $row['expiration_date'] = $this->create_datetime($row['expiration_date']);
-
         $row['user'] = SelectUserById::init($this->pdo)
             ->where($row['id_user'])
             ->get();
 
-        return Session::create_from_array($row);
+        return ChangeMailRequest::create_from_array($row);
     }
 
 }

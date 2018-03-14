@@ -9,10 +9,17 @@
 namespace edwrodrig\usac;
 
 
+use edwrodrig\usac\exception\InvalidMailException;
+
 class Email
 {
     private $mail;
 
+    /**
+     * Email constructor.
+     * @param string $mail
+     * @throws InvalidMailException
+     */
     public function __construct(string $mail) {
         $this->mail = filter_var($mail, FILTER_VALIDATE_EMAIL);
         if ( $this->mail === FALSE ) {
