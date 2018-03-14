@@ -32,7 +32,7 @@ class Usac
     /**
      * @var \PDO
      */
-    private $pdo;
+    protected $pdo;
 
     private $registration_request_duration;
 
@@ -115,7 +115,7 @@ class Usac
      * @throws RequestExpiredException
      * @throws \edwrodrig\query\exception\SelectException
      * @throws exception\InvalidMailException
-     * @throws query\user\exception\RegistrationRequestDoesNotExistException
+     * @throws query\request\exception\RegistrationRequestDoesNotExistException
      */
     public function get_registration_request(string $id_request) : RegistrationRequest {
         $request = SelectRegistrationRequest::init($this->pdo)
@@ -146,7 +146,7 @@ class Usac
      * @throws \edwrodrig\query\exception\SelectException
      * @throws \edwrodrig\query\exception\UpdateException
      * @throws exception\InvalidMailException
-     * @throws query\user\exception\RegistrationRequestDoesNotExistException
+     * @throws query\request\exception\RegistrationRequestDoesNotExistException
      */
     public function register_user(string $id_request, string $name, string $password) {
         $request = $this->get_registration_request($id_request);
