@@ -9,7 +9,6 @@
     "minimum-stability" : "stable",
     "require": {
         "php" : "^7.0",
-        "phpmailer/phpmailer" : "^6.0",
         "edwrodrig/query" : "1.2.0"
     },
     "require-dev" : {

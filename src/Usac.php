@@ -123,8 +123,6 @@ class Usac
             ->set($request)
             ->insert();
 
-        //send mail?
-
         return $request;
     }
 
@@ -196,8 +194,6 @@ class Usac
         InsertChangeMailRequest::init($this->pdo)
             ->set($request)
             ->insert();
-
-        //send mail?
 
         return $request;
     }
