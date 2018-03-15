@@ -69,9 +69,8 @@ class UsacTest extends TableTestCase
 
         $usac->user_create($user);
 
-        $user = SelectUserByName::init($this->pdo)
-            ->where('edwin')
-            ->get();
+
+        $user = $usac->user_get_by_name('edwin');
 
         $this->assertEquals('edwin', $user->get_name());
         $this->assertTrue($user->check_password('pass'));
@@ -108,9 +107,7 @@ class UsacTest extends TableTestCase
 
         $usac->user_create($user);
 
-        $user = SelectUserByName::init($this->pdo)
-            ->where('edwin')
-            ->get();
+        $user = $usac->user_get_by_name('edwin');
 
         $request = $usac->request_change_mail($user, new Email('other@mail.com'));
 
@@ -123,9 +120,7 @@ class UsacTest extends TableTestCase
             $this->assertEquals($retrieved_request->get_id_request(), $e->getMessage());
         }
 
-        $user = SelectUserByName::init($this->pdo)
-            ->where('edwin')
-            ->get();
+        $user = $usac->user_get_by_name('edwin');
 
         $this->assertEquals('other@mail.com', strval($user->get_mail()));
 

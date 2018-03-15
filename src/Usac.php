@@ -23,6 +23,7 @@ use edwrodrig\usac\query\session\InsertSession;
 use edwrodrig\usac\query\session\SelectSession;
 use edwrodrig\usac\query\user\InsertUser;
 use edwrodrig\usac\query\user\SelectUserByMail;
+use edwrodrig\usac\query\user\SelectUserByName;
 use edwrodrig\usac\query\user\UpdateUserMail;
 use edwrodrig\usac\request\ChangeMailRequest;
 use edwrodrig\usac\request\RegistrationRequest;
@@ -89,6 +90,19 @@ class Usac
             SelectUserByMail::init($this->pdo)
                 ->where($mail)
                 ->select()->fetch() !== FALSE;
+    }
+
+    /**
+     * @param string $name
+     * @return User
+     * @throws \edwrodrig\query\exception\SelectException
+     * @throws exception\InvalidMailException
+     */
+    public function user_get_by_name(string $name) : User {
+        return
+            SelectUserByName::init($this->pdo)
+                ->where($name)
+                ->get();
     }
 
     /**
