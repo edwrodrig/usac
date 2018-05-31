@@ -30,7 +30,7 @@ SQL;
 
     public function set(User $user) {
         $this
-            ->b('password_hash', $user->get_password_hash())
+            ->b('password_hash', $user->getPasswordHash())
             ->b('id_user', $user->get_id_user(), \PDO::PARAM_INT);
         return $this;
     }

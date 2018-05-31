@@ -1,32 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: edwin
- * Date: 13-03-18
- * Time: 14:58
- */
+declare(strict_types=1);
 
 namespace edwrodrig\usac;
 
-
 use DateInterval;
+use DateTime;
 
 class Session
 {
-    const TABLE = <<<SQL
-CREATE TABLE usac_sessions (
-  id_session TEXT PRIMARY KEY,
-  id_user INTEGER NOT NULL,
-  creation_date DATETIME,
-  expiration_date DATETIME
-)
-SQL;
-
-
     /**
-     * @var string
+     * @var SessionId
      */
-    private $id_session;
+    private $id;
 
     /**
      * @var User
@@ -34,63 +19,92 @@ SQL;
     private $user;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $creation_date;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $expiration_date;
 
     protected function __construct() {}
 
     /**
+     * Creates a new session for user.
+     *
+     * It generates a new random {@see SessionId session id}
      * @param User $user
      * @param DateInterval $duration
      * @return Session
      * @throws \Exception
      */
-    public static function create_new_session(User $user, DateInterval $duration) {
+    public static function createNewSession(User $user, DateInterval $duration) {
         $session = new self;
         $session->user = $user;
-        $session->id_session = bin2hex(random_bytes(32));
-        $session->creation_date = new \DateTime();
+        $session->id = SessionId::createNew();
+
+        $session->creation_date = new DateTime();
         $session->expiration_date = (clone $session->creation_date)->add($duration);
         return $session;
     }
 
-    public static function create_from_array(array $data) {
+    public static function createFromArray(array $data) {
         $session = new self;
         $session->user = $data['user'];
-        $session->id_session = $data['id_session'];
+        $session->id = new SessionId($data['id_session']);
         $session->creation_date = $data['creation_date'];
         $session->expiration_date = $data['expiration_date'];
         return $session;
     }
 
-    public function get_user() : User {
+    /**
+     * Get the user relative to this session
+     * @return User
+     */
+    public function getUser() : User {
         return $this->user;
     }
 
-    public function is_expired() : bool {
-        return $this->expiration_date < new \DateTime;
+    /**
+     * Check if this session is expired
+     *
+     * It compares the {@see Session::getExpirationDate() expiration date} with some now date, by default system date
+     * @param DateTime|null $now
+     * @return bool
+     */
+    public function isExpired(?DateTime $now = null) : bool {
+        if ( is_null($now) ) {
+            $now = new DateTime;
+        }
+        return $this->expiration_date < $now;
     }
 
-    public function get_id_session() : string
+    /**
+     * Get the current session id
+     * @return SessionId
+     */
+    public function getId() : SessionId
     {
-        return $this->id_session;
+        return $this->id;
     }
 
-    public function get_creation_date() : \DateTime
+    /**
+     * Get the creation date of the session
+     * @return DateTime
+     */
+    public function getCreationDate() : DateTime
     {
         return $this->creation_date;
     }
 
-    public function get_expiration_date() : \DateTime
+    /**
+     * Get the expiration date
+     * @return DateTime
+     */
+    public function getExpirationDate() : DateTime
     {
         return $this->expiration_date;
     }
-
 
 }

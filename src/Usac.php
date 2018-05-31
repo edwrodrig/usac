@@ -168,7 +168,7 @@ class Usac
     public function register_user(string $id_request, string $name, string $password) {
         $request = $this->get_registration_request($id_request);
 
-        $user = User::create_new_user($name, $password, $request->get_mail());
+        $user = User::createNewUser($name, $password, $request->get_mail());
 
         $this->user_create($user);
 
@@ -236,7 +236,7 @@ class Usac
      * @throws \Exception
      */
     public function session_create(User $user) : Session {
-        $session = Session::create_new_session($user, $this->session_duration);
+        $session = Session::createNewSession($user, $this->session_duration);
 
         InsertSession::init($this->pdo)
             ->set($session)

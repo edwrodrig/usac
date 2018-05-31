@@ -39,7 +39,7 @@ abstract class SelectUser extends Select
     public function create_from_row(array $row) : User {
         $row['mail'] = new Email($row['mail']);
 
-        return User::create_from_array($row);
+        return User::createFromArray($row);
     }
 
 }

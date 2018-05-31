@@ -73,7 +73,7 @@ SQL;
             ->where($row['id_user'])
             ->get();
 
-        return Session::create_from_array($row);
+        return Session::createFromArray($row);
     }
 
 }

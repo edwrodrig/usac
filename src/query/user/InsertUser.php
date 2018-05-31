@@ -38,10 +38,10 @@ SQL;
 
     public function set(User $user) {
         $this
-            ->b('name', $user->get_name())
-            ->b('password_hash', $user->get_password_hash())
-            ->b('mail', strval($user->get_mail()))
-            ->b('default_lang', $user->get_default_lang());
+            ->b('name', $user->getName())
+            ->b('password_hash', $user->getPasswordHash())
+            ->b('mail', strval($user->getMail()))
+            ->b('default_lang', $user->getDefaultLang());
         return $this;
     }
 

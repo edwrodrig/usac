@@ -65,14 +65,14 @@ class UsacTest extends TableTestCase
     function testSession() {
         $usac = new Usac($this->pdo);
 
-        $user = User::create_new_user('edwin', 'pass', new Email('edwin@mail.com'));
+        $user = User::createNewUser('edwin', 'pass', new Email('edwin@mail.com'));
 
         $usac->user_create($user);
 
 
         $user = $usac->user_get_by_name('edwin');
 
-        $this->assertEquals('edwin', $user->get_name());
+        $this->assertEquals('edwin', $user->getName());
         $this->assertTrue($user->check_password('pass'));
 
         $session = $usac->session_create($user);
@@ -80,7 +80,7 @@ class UsacTest extends TableTestCase
         $retrieved_session = $usac->session_get($session->get_id_session());
 
         $this->assertEquals($session->get_id_session(), $retrieved_session->get_id_session());
-        $this->assertEquals($user->get_id_user(), $retrieved_session->get_user()->get_id_user());
+        $this->assertEquals($user->get_id_user(), $retrieved_session->get_name()->get_id_user());
 
         $usac->session_close($retrieved_session);
 
@@ -103,7 +103,7 @@ class UsacTest extends TableTestCase
     function testChangeMail() {
         $usac = new Usac($this->pdo);
 
-        $user = User::create_new_user('edwin', 'pass', new Email('edwin@mail.com'));
+        $user = User::createNewUser('edwin', 'pass', new Email('edwin@mail.com'));
 
         $usac->user_create($user);
 
@@ -122,7 +122,7 @@ class UsacTest extends TableTestCase
 
         $user = $usac->user_get_by_name('edwin');
 
-        $this->assertEquals('other@mail.com', strval($user->get_mail()));
+        $this->assertEquals('other@mail.com', strval($user->getMail()));
 
         try {
             SelectUserByMail::init($this->pdo)

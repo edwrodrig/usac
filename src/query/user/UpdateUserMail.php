@@ -30,7 +30,7 @@ SQL;
 
     public function set(User $user) {
         $this
-            ->b('mail', strval($user->get_mail()))
+            ->b('mail', strval($user->getMail()))
             ->b('id_user', $user->get_id_user(), \PDO::PARAM_INT);
         return $this;
     }

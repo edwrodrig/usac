@@ -39,7 +39,7 @@ SQL;
     public function set(Session $session) {
         $this
             ->b('id_session', $session->get_id_session())
-            ->b('id_user', $session->get_user()->get_id_user())
+            ->b('id_user', $session->get_name()->get_id_user())
             ->b_datetime('creation_date', $session->get_creation_date())
             ->b_datetime('expiration_date', $session->get_expiration_date());
         return $this;
